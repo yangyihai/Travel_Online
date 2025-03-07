@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行计划 - 旅途记</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-map-marked-alt"></i> 旅途记
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="plan.html">旅行计划</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="discover.html">旅行发现</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="loginBtn">登录/注册</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="plan-section">
+        <div class="container">
+            <h1 class="section-title">创建旅行计划</h1>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="plan-editor card">
+                        <div class="card-body">
+                            <form id="travelPlanForm">
+                                <div class="mb-3">
+                                    <label for="planTitle" class="form-label">旅行标题</label>
+                                    <input type="text" class="form-control" id="planTitle" placeholder="例如：美丽的杭州三日游">
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="startLocation" class="form-label">出发地</label>
+                                        <input type="text" class="form-control" id="startLocation" placeholder="例如：北京">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="destination" class="form-label">目的地</label>
+                                        <input type="text" class="form-control" id="destination" placeholder="例如：杭州">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="startDate" class="form-label">开始日期</label>
+                                        <input type="date" class="form-control" id="startDate">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="endDate" class="form-label">结束日期</label>
+                                        <input type="date" class="form-control" id="endDate">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="planDescription" class="form-label">计划描述</label>
+                                    <div id="editor-toolbar" class="editor-toolbar">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btnBold">
+                                            <i class="fas fa-bold"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btnItalic">
+                                            <i class="fas fa-italic"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btnImage">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btnEmoji">
+                                            <i class="far fa-smile"></i>
+                                        </button>
+                                    </div>
+                                    <div id="planDescription" class="form-control editor-content" contenteditable="true" 
+                                         style="min-height: 200px;"></div>
+                                    <input type="file" id="imageUpload" style="display: none;" accept="image/*">
+                                </div>
+                                
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-primary" id="savePlan">保存计划</button>
+                                    <button type="button" class="btn btn-success" id="publishPlan">发布计划</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card route-planning">
+                        <div class="card-header">
+                            <h5>路线规划</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="mapContainer" style="height: 300px;"></div>
+                            <div class="route-options mt-3">
+                                <div class="btn-group w-100 mb-2" role="group">
+                                    <button type="button" class="btn btn-outline-primary active" data-mode="driving">驾车</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="transit">公交</button>
+                                    <button type="button" class="btn btn-outline-primary" data-mode="walking">步行</button>
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" id="planRoute">规划路线</button>
+                            </div>
+                            <div id="routeInfo" class="mt-3">
+                                <!-- 路线信息将在此显示 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3 saved-plans">
+                        <div class="card-header">
+                            <h5>已保存计划</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="savedPlansList">
+                                <div class="text-center text-muted">
+                                    <p>暂无保存的计划</p>
+                                </div>
+                                <!-- 已保存的计划将在此显示 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 花花旅途记 - 版权所有</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://api.map.baidu.com/api?v=3.0&ak=JhQFjjsMfDYSkf7gTh6y8UnQw6EfM4VG&s=1"></script>
+    <script src="js/main.js"></script>
+    <script src="js/map.js"></script>
+</body>
+</html>
