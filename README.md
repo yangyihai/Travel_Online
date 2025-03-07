@@ -1,4 +1,4 @@
-# Travel_Online
+# Travel planning online sharing site
 ![image](https://github.com/user-attachments/assets/9afd99e3-16bd-43fc-a55d-4e9958180365)
 ![image](https://github.com/user-attachments/assets/5a60f5af-b7a1-4ef4-9053-05d04825b2e2)
 ![image](https://github.com/user-attachments/assets/1ba32927-80b6-4436-8b9b-4f3206fdf7c1)
